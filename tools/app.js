@@ -16,22 +16,34 @@ app.use(bodyParser.urlencoded({ extended : true }));
 var root = path.join(__dirname, '..');
 var template = path.join(__dirname, './template.js');
 
-app.post('/task', function(  req, resp, next ) {
+/**
+ * Example curl command:
+ * curl -X POST http://localhost:1337/task \
+ *   -H "Content-Type: application/x-www-form-urlencoded" \
+ *   -d "name=MyTask&taskname=mytask&content=console.log('Hello World');"
+ */
+app.post('/task', function(req, resp, next) {
     debug('init task');
     resp.end('');
 
+    /**
+     * @type {Object}
+     * @property {string} name
+     * @property {string} taskname
+     * @property {string} content
+     */
     var body = req.body;
     console.log( body );
-    var tast_path = path.join( root, body.taskname + '.js');
+    var task_path = path.join( root, body.taskname + '.ts');
 
-    if( !fs.existsSync(tast_path)  ){
+    if( !fs.existsSync(task_path)  ){
 
       var tpl = fs.readFileSync(template, 'utf8');
       var res = tpl.replace(/{{([^}]+)}}/g, function( $, $1) {
          return body[$1];
       });
 
-      fs.writeFileSync( tast_path, res );
+      fs.writeFileSync( task_path, res );
     }
 });
 
