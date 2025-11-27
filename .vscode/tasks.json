@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "启动 app.js",
+            "type": "shell",
+            "command": "node tools/app.js",
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "isBackground": true,
+            "problemMatcher": []
+        }
+    ]
+}

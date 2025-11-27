@@ -1,8 +1,13 @@
 var fs = require('fs');
-var debug = require('debug');
+const debugMaker = function(moduleName) {
+    return function(message) {
+        console.log(`[${moduleName}] ${message}`);
+    };
+}
+
 var path = require('path');
 
-debug = debug('leetcode_tools');
+debug = debugMaker('leetcode_tools');
 
 var express = require('express');
 
@@ -24,7 +29,7 @@ var template = path.join(__dirname, './template.js');
  */
 app.post('/task', function(req, resp, next) {
     debug('init task');
-    resp.end('');
+    resp.end(JSON.stringify({ status : 'ok' }));
 
     /**
      * @type {Object}
